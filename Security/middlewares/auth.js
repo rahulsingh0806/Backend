@@ -3,9 +3,9 @@ require("dotenv").config();
 
 exports.auth = async(req, res, next) => {
     try{
-        const token = req.body.token;
+        const token = req.body.token || req.cookie.token || req.header("Authorization").replace("bear","");
 
-        if(!token){
+        if(!token || token == undefined){
             return res.status(401).json({
                 success:false,
                 message:"Token not found"
